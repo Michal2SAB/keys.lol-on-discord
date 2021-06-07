@@ -68,6 +68,8 @@ async def luck(ctx):
     r = requests.get("https://www.blockchain.com/btc/address/" + wallets[w])
     if 'The current value of this address is 0.00000000 BTC ($0.00)' in r.text:
       balances.append("(Empty)")
+    elif not 'The current value of this address is' in r.text:
+      balances.append("(Failed to check balance)")
     else:
       balances.append("(Not Empty)")
 
@@ -81,5 +83,7 @@ async def luck(ctx):
   embed=discord.Embed(title="Random Seeds", description=finalWallets, color=0xf7941a)
   embed.set_author(name="Bitcoin", icon_url="https://bitmarket.pl/wp-content/uploads/2020/10/Bitcoin.svg_.png")
   await ctx.send(embed=embed)
+  print(">> Successfully generated 10 random and valid bitcoin seeds.")
+  print("")
 
 client.run("Your bot token here")
